@@ -3,20 +3,25 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ output extension=".cs" #>
-Squares:  
-<#  
-    for(int i = 0; i < 4; i++)  
-    {  
-#>
-    The square of <#=            i #> is <#=            Square(i+1) #>.  
-<#  
-    }
- #>
- That is the end of the list.  
- <#+    // 类功能控制块  
-    private int Square(int i)  
-    {  
-        return i*i;  
-    }  
+<#@ output extension=".cs" #> 
+
+<#@ assembly name="System.Data" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Data.SqlClient" #> 
+<#@ import namespace="System.IO" #>
+<#@ import namespace="Microsoft.VisualStudio.TextTemplating"#>
+<#
+    /*命名空间  */
+    var namespaceDTO="MyApp.DTO";
+    var namespaceDomain = "MyApp.Domain";
+    var namespaceRepositry="MyApp.Repositry";
+    var namespaceApplication="MyApp.Application";
+    var namespaceServerContracts="MyApp.ServerContracts";
+    var namespaceController="MyApp.Controller";
+ 
+    /*连接字符串  */
+    var connString= @"Server=1TVFGO8OATR3Y7G\SQLEXPRESS;DataBase=MyDB;User Id=sa;Password=123;";
+ 
+    /*表名筛选  */
+    var filterString= "%%";
  #>

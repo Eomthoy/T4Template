@@ -7,7 +7,6 @@
   <ItemGroup>
     <Folder Include="MySql\Domain\" />
     <Folder Include="MySql\DTO\" />
-    <Folder Include="SqlServer\Domain\" />
     <Folder Include="SqlServer\DTO\" />
   </ItemGroup>
 
@@ -17,12 +16,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>BaseTemplate.tt</DependentUpon>
     </None>
+    <None Include="SqlServer\Domain\DomainTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DomainTemplate.tt</DependentUpon>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
     <None Update="BaseTemplate.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BaseTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="SqlServer\Domain\DomainTemplate.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DomainTemplate.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
@@ -35,6 +43,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>BaseTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="SqlServer\Domain\DomainTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DomainTemplate.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 
