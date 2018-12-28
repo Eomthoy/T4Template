@@ -3,3 +3,5 @@
 ################################################################################
 
 /.vs/T4Template
+/T4Template/bin/Debug/netcoreapp2.1
+/T4Template/obj

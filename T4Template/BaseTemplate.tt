@@ -1,0 +1,22 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+Squares:  
+<#  
+    for(int i = 0; i < 4; i++)  
+    {  
+#>
+    The square of <#=            i #> is <#=            Square(i+1) #>.  
+<#  
+    }
+ #>
+ That is the end of the list.  
+ <#+    // 类功能控制块  
+    private int Square(int i)  
+    {  
+        return i*i;  
+    }  
+ #>
