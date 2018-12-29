@@ -21,6 +21,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>DomainTemplate.tt</DependentUpon>
     </None>
+    <None Include="SqlServer\Domain\SqlServerHelper.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SqlServerHelper.tt</DependentUpon>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +36,10 @@
     <None Update="SqlServer\Domain\DomainTemplate.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DomainTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="SqlServer\Domain\SqlServerHelper.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SqlServerHelper.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
@@ -48,6 +57,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>DomainTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="SqlServer\Domain\SqlServerHelper.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SqlServerHelper.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 

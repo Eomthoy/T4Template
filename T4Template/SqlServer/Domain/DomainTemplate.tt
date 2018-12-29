@@ -1,7 +1,18 @@
 ﻿<#@ include file="../../BaseTemplate.tt" #>
-<#
-    for(int i=0;i<4;i++)
+<#@ include file="SqlServerHelper.tt" #>
+using System;
+using System.Collections.Generic;
+
+namespace <#=        namespaceDomain #>
+{
+    /// <summary>
+    /// Create By T4Template [<#=        DateTime.Now #>]
+    /// </summary>
+    public class Test
     {
- #>
-<#=            namespaceDomain +","    #><#=            namespaceDTO #><#=            namespaceController #>
-<#    } #>
+        /// <summary>
+        /// Id
+        /// </summary>
+        public int Id { get; set; }
+    }
+}
