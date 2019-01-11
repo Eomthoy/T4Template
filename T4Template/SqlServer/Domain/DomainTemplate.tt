@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace <#=        namespaceDomain #>
 {
     /// <summary>
-    /// Create By T4Template [<#=        DateTime.Now #>]
+    /// Create By T4Template
     /// </summary>
     public class Test
     {

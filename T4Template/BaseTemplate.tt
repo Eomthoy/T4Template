@@ -9,6 +9,8 @@
 <#@ import namespace="System.Data.SqlClient" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="Microsoft.VisualStudio.TextTemplating"#>
+<#@ assembly name="Core.Common" #>
+<#@ import namespace="Core.Common.Helper" #>
 <#
     /*命名空间  */
     var namespaceDTO="MyApp.DTO";
@@ -20,5 +22,5 @@
     /*连接字符串  */
     var connString= @"Server=1TVFGO8OATR3Y7G\SQLEXPRESS;DataBase=MyDB;User Id=sa;Password=123;"; 
     /*表名筛选  */
-    var filterString= "%%";
+    var filterString = "%%";
  #>
