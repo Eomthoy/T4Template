@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.0": {
-      "Core.Common/1.0.1": {
+      "Core.Common/1.0.5": {
         "type": "package",
         "dependencies": {
           "DotNetCore.NPOI": "1.2.1",
@@ -4783,7 +4783,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.0",
         "dependencies": {
-          "Core.Common": "1.0.1"
+          "Core.Common": "1.0.5"
         },
         "compile": {
           "bin/placeholder/T4Template.dll": {}
@@ -4795,12 +4795,12 @@
     }
   },
   "libraries": {
-    "Core.Common/1.0.1": {
-      "sha512": "g6l95S8YXqw5WQicZYl+RFJgnwuUiKSf0rNy1NJVEl2/w+WsoYBtzUBET7uXSa254tT0YZm1+mKbIxHfBJ+svQ==",
+    "Core.Common/1.0.5": {
+      "sha512": "QYeh8fhivONC2KbSAMhG3Hv5qxFzD8hHHkX2V1nAd5qZMAKPD1Sa9/eWkyJ89+m1NkuyP7F3/K20lvoDhVzJ9Q==",
       "type": "package",
-      "path": "core.common/1.0.1",
+      "path": "core.common/1.0.5",
       "files": [
-        "core.common.1.0.1.nupkg.sha512",
+        "core.common.1.0.5.nupkg.sha512",
         "core.common.nuspec",
         "lib/netcoreapp2.0/Core.Common.dll"
       ]

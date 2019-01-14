@@ -1,20 +1,20 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "cbf86e2d5f54b33a9a691c2b95efc29dc662f216"
+    "signature": "318bb2f90e4097e80fa54e9da2227591f2afa0db"
   },
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.0": {
       "T4Template/1.0.0": {
         "dependencies": {
-          "Core.Common": "1.0.1"
+          "Core.Common": "1.0.5"
         },
         "runtime": {
           "T4Template.dll": {}
         }
       },
-      "Core.Common/1.0.1": {
+      "Core.Common/1.0.5": {
         "dependencies": {
           "DotNetCore.NPOI": "1.2.1",
           "Microsoft.AspNetCore.All": "2.0.0",
@@ -23,8 +23,8 @@
         },
         "runtime": {
           "lib/netcoreapp2.0/Core.Common.dll": {
-            "assemblyVersion": "1.0.1.0",
-            "fileVersion": "1.0.1.0"
+            "assemblyVersion": "1.0.5.0",
+            "fileVersion": "1.0.5.0"
           }
         }
       },
@@ -3824,12 +3824,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Core.Common/1.0.1": {
+    "Core.Common/1.0.5": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-g6l95S8YXqw5WQicZYl+RFJgnwuUiKSf0rNy1NJVEl2/w+WsoYBtzUBET7uXSa254tT0YZm1+mKbIxHfBJ+svQ==",
-      "path": "core.common/1.0.1",
-      "hashPath": "core.common.1.0.1.nupkg.sha512"
+      "sha512": "sha512-QYeh8fhivONC2KbSAMhG3Hv5qxFzD8hHHkX2V1nAd5qZMAKPD1Sa9/eWkyJ89+m1NkuyP7F3/K20lvoDhVzJ9Q==",
+      "path": "core.common/1.0.5",
+      "hashPath": "core.common.1.0.5.nupkg.sha512"
     },
     "DotNetCore.NPOI/1.2.1": {
       "type": "package",

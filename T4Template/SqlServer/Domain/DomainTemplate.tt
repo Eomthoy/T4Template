@@ -1,18 +1,37 @@
 ﻿<#@ include file="../../BaseTemplate.tt" #>
-<#@ include file="SqlServerHelper.tt" #>
 using System;
 using System.Collections.Generic;
 
 namespace <#=        namespaceDomain #>
 {
+<# 
+    List<Tables> tables = GetAll<Tables>(connString,"select * from sys.tables",CommandType.Text);
+    foreach (Tables table in tables)
+    {
+#>
     /// <summary>
     /// Create By T4Template
     /// </summary>
-    public class Test
+    public class <#=            table.name#>
     {
+<#
+        List<Columns> columns = GetColumns(connString);
+        foreach (Columns column in columns)
+        {
+ #>
         /// <summary>
-        /// Id
+        /// <#=                column.description #>
         /// </summary>
-        public int Id { get; set; }
+        public int <#=                column.name #> { get; set; }
+<#        } #>
     }
+<#    } #>
 }
+<#+
+    public List<Columns> GetColumns(string connString)
+    {
+        string sql = "SELECT [columns].[name], [descriptions].[value] as [Description] FROM sys.tables as [tables] INNER JOIN sys.columns as [columns] on[columns].[object_id] =[tables].[object_id] LEFT JOIN sys.extended_properties[descriptions] on[descriptions].[major_id] =[tables].[object_id] and[descriptions].[minor_id] =[columns].[column_id] where[tables].[object_id] = 277576027";
+        List<Columns> columns = GetAll<Columns>(connString,sql, CommandType.Text);
+        return columns;
+    }
+ #>

@@ -45,7 +45,7 @@ namespace DataBaseTest
         /// <summary>
         /// 字段描述
         /// </summary>
-        public Description Description { get; set; }
+        public string Description { get; set; }
     }
     public class Description
     {
