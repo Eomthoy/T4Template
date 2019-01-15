@@ -1,12 +1,18 @@
-﻿<#@ include file="../DBHelper.tt" #>using System;
+﻿<#@ include file="../DBHelper.tt" #>
+<#    
+    //初始化Manager对象 
+    var manager = Manager.Create();  
+    foreach (Tables table in tables){ 
+        manager.StartNewFile(table.name+".cs");
+#>
+using System;
 using System.Text;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace <#=        namespaceDomain #>
+namespace <#=            namespaceDomain #>
 {
-<#    foreach (Tables table in tables){ #>
     /// <summary>
     /// Create By T4Template
     /// </summary>
@@ -21,5 +27,9 @@ namespace <#=        namespaceDomain #>
         public <#=                column.type #> <#=                column.name #> { get; set; }
 <#        } #>
     }
-<#    } #>
 }
+<#
+        manager.EndBlock();    
+    }
+    manager.Process(true);  
+#>
