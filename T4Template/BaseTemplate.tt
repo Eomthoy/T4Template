@@ -6,93 +6,30 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".cs" #>
 <#@ assembly name="System.Data" #>
+<#@ assembly name="EnvDTE"#>
 <#@ import namespace="System.Data" #>
 <#@ import namespace="System.Data.Common" #>
 <#@ import namespace="System.Data.SqlClient" #>
 <#@ import namespace="System.IO" #>
-<#@ import namespace="Microsoft.VisualStudio.TextTemplating"#>
-<#@ assembly name="$(ProjectDir)\Core.Common.dll" #>
-<#@ import namespace="Core.Common.Helper" #>
 <#
-    /*命名空间  */
+    /***********************************************基础信息定义（命名空间，数据库连接信息）***********************************************************/
+    //命名空间
     string namespaceDTO="MyApp.DTO";
     string namespaceDomain = "MyApp.Domain";
     string namespaceRepositry="MyApp.Repositry";
     string namespaceApplication="MyApp.Application";
     string namespaceServerContracts="MyApp.ServerContracts";
     string namespaceController="MyApp.Controller";
-    /*连接字符串  */
+    //连接字符串
     string connString= @"Server=1TVFGO8OATR3Y7G\SQLEXPRESS;DataBase=MyDB;User Id=sa;Password=123;"; 
-    /*表名筛选  */
-    string filterString = "%%";
- #>
-<#+   
-    /// <summary>
-    /// 执行查询，获取数据集List<T>
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="sql"></param>
-    /// <param name="commandType"></param>
-    /// <param name="parameters"></param>
-    /// <returns></returns>
-    public static List<T> GetAll<T>(string connString, string sql, CommandType commandType, params SqlParameter[] parameters) where T : new()
-    {
-        DataTable dt = ExecuteDataTable(connString,sql, commandType, parameters);
-        List<T> list = new List<T>();
-        foreach (DataRow row in dt.Rows)
-        {
-            T model = DataTableToEntity<T>(row, dt.Columns);
-            list.Add(model);
-        }
-        return list;
-    }
-    /// <summary>
-    /// 执行查询，返回DataTable对象
-    /// </summary>
-    /// <param name="sql"></param>
-    /// <param name="commandType"></param>
-    /// <param name="parameters"></param>
-    /// <returns></returns>
-    public static DataTable ExecuteDataTable(string connString, string sql, CommandType commandType, params SqlParameter[] parameters)
-    { 
-        using (SqlDataAdapter adapter = new SqlDataAdapter(sql, connString))
-        {
-            DataTable dt = new DataTable();
-            adapter.SelectCommand.CommandType = commandType;
-            if (parameters != null)
-            {
-                adapter.SelectCommand.Parameters.AddRange(parameters);
-            }
-            adapter.Fill(dt);
-            return dt;
-        } 
-    }
-    /// <summary>
-    /// DataTable To Entity
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="data"></param>
-    /// <returns></returns>
-    private static T DataTableToEntity<T>(DataRow data, DataColumnCollection columns) where T : new()
-    {
-        T model = new T();
-        foreach (PropertyInfo propertyInfo in typeof(T).GetProperties())
-        {
-            //字段属性
-            string propName = propertyInfo.Name;
-            string propType = propertyInfo.PropertyType.Name.Trim().ToLower();
-            //赋值
-            if (columns.Contains(propName))
-            {
-                object val = data[propName];
-                if (val != DBNull.Value && val != null)
-                {
-                    propertyInfo.SetValue(model, val, null);
-                }
-            }
-        }
-        return model;
-    }
+    //表名筛选 
+    string filterString = " '%%' ";
+#>
+<#+
+    /**********************************************************多文件输出帮助类**************************************************************************/
+
+
+    /********************************************************SqlServer数据库表模型***********************************************************************/
     public class Tables
     {
         /// <summary>
@@ -100,9 +37,13 @@
         /// </summary>
         public int object_id { get; set; }
         /// <summary>
-        /// 表名
+        /// 表名 
         /// </summary>
         public string name { get; set; }
+        /// <summary>
+        /// 表名
+        /// </summary>
+        public List<Columns> Columns { get; set; }
     }
     public class Columns
     {
@@ -118,6 +59,22 @@
         /// 字段名
         /// </summary>
         public string name { get; set; }
+        /// <summary>
+        /// 字段类型
+        /// </summary>
+        public int user_type_id { get; set; }
+        /// <summary>
+        /// 字段类型
+        /// </summary>
+        public string type { get; set; }
+        /// <summary>
+        /// 长度
+        /// </summary>
+        public int max_length { get; set; }
+        /// <summary>
+        /// 是否可空
+        /// </summary>
+        public bool is_nullable { get; set; }
         /// <summary>
         /// 字段描述
         /// </summary>
@@ -138,4 +95,8 @@
         /// </summary>
         public string name { get; set; }
     }
-  #>
+    /********************************************************MySql数据库表模型***********************************************************************/
+    
+
+   
+ #>
