@@ -24,20 +24,10 @@ namespace MyApp.Domain
         [Description("Name")]
         public string Name { get; set; }
         /// <summary>
-        /// Gender
+        /// Age
         /// </summary>
-        [Description("Gender")]
-        public bool? Gender { get; set; }
-        /// <summary>
-        /// ClassId
-        /// </summary>
-        [Description("ClassId")]
-        public int? ClassId { get; set; }
-        /// <summary>
-        /// CreateTime
-        /// </summary>
-        [Description("CreateTime")]
-        public DateTime? CreateTime { get; set; }
+        [Description("Age")]
+        public int? Age { get; set; }
         #endregion
     }
 }

@@ -20,7 +20,8 @@
     string namespaceServerContracts="MyApp.ServerContracts";
     string namespaceController="MyApp.Controller";
     //连接字符串
-    string connString= @"Server=1TVFGO8OATR3Y7G\SQLEXPRESS;DataBase=MyDB;User Id=sa;Password=123;"; 
+    //string connString= @"Server=1TVFGO8OATR3Y7G\SQLEXPRESS;DataBase=MyDB;User Id=sa;Password=123;"; 
+    string connString= @"Server=.;DataBase=MyDB;User Id=sa;Password=123456;"; 
     //表名筛选 
     string filterString = " '%%' ";
 #><#+

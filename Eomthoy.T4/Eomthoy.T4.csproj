@@ -49,28 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SqlServer\Domain\Apps.cs">
-      <DependentUpon>Domain_Template.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SqlServer\Domain\Class.cs">
-      <DependentUpon>Domain_Template.tt</DependentUpon>
-    </Compile>
     <Compile Include="SqlServer\Domain\Student.cs">
       <DependentUpon>Domain_Template.tt</DependentUpon>
     </Compile>
-    <Compile Include="SqlServer\Domain\Websites.cs">
-      <DependentUpon>Domain_Template.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SqlServer\DTO\AppsDto.cs">
-      <DependentUpon>DTO_Template.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SqlServer\DTO\ClassDto.cs">
-      <DependentUpon>DTO_Template.tt</DependentUpon>
-    </Compile>
     <Compile Include="SqlServer\DTO\StudentDto.cs">
-      <DependentUpon>DTO_Template.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SqlServer\DTO\WebsitesDto.cs">
       <DependentUpon>DTO_Template.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -93,23 +75,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBHelper.tt</DependentUpon>
     </Content>
+    <Content Include="SqlServer\Domain\Domain_Template.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Domain_Template.txt</LastGenOutput>
+    </Content>
     <Content Include="SqlServer\Domain\Domain_Template.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Domain_Template.tt</DependentUpon>
     </Content>
-    <Content Include="SqlServer\Domain\Domain_Template.tt">
+    <Content Include="SqlServer\DTO\DTO_Template.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Domain_Template.txt</LastGenOutput>
+      <LastGenOutput>DTO_Template.txt</LastGenOutput>
     </Content>
     <Content Include="SqlServer\DTO\DTO_Template.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DTO_Template.tt</DependentUpon>
-    </Content>
-    <Content Include="SqlServer\DTO\DTO_Template.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DTO_Template.txt</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
