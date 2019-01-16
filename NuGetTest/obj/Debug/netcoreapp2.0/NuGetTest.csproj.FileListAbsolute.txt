@@ -1,6 +1,0 @@
-E:\GitHub\T4Template\NuGetTest\bin\Debug\netcoreapp2.0\NuGetTest.deps.json
-E:\GitHub\T4Template\NuGetTest\bin\Debug\netcoreapp2.0\NuGetTest.dll
-E:\GitHub\T4Template\NuGetTest\obj\Debug\netcoreapp2.0\NuGetTest.csprojAssemblyReference.cache
-E:\GitHub\T4Template\NuGetTest\obj\Debug\netcoreapp2.0\NuGetTest.csproj.CoreCompileInputs.cache
-E:\GitHub\T4Template\NuGetTest\obj\Debug\netcoreapp2.0\NuGetTest.AssemblyInfoInputs.cache
-E:\GitHub\T4Template\NuGetTest\obj\Debug\netcoreapp2.0\NuGetTest.AssemblyInfo.cs

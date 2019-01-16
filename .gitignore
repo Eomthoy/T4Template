@@ -6,3 +6,7 @@
 /T4Template/bin/Debug/netcoreapp2.1
 /T4Template/obj
 /T4Template/SqlServer/Domain/DomainTemplate.cs
+/.vs/Eomthoy.T4/v15
+/Eomthoy.T4.DataBaseTest/bin/Debug
+/Eomthoy.T4.DataBaseTest/obj/Debug
+/Eomthoy.T4/obj/Debug

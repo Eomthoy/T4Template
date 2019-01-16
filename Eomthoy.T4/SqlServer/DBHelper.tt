@@ -1,0 +1,127 @@
+﻿<#@ include file="../BaseTemplate.tt" #><#
+    //查询所有表
+    string sql = "select * from sys.tables where name like "+ filterString;
+    List<Tables> tables = GetAll<Tables> (connString,  sql, CommandType.Text);
+    //查询所有字段
+    string newSql = "SELECT [columns].*, [descriptions].[value] as [description], [type].[name] as [type] FROM sys.tables as [tables] INNER JOIN sys.columns as [columns] on [columns].[object_id]=[tables].[object_id] LEFT JOIN sys.extended_properties [descriptions] on [descriptions].[major_id]=[tables].[object_id] and [descriptions].[minor_id]=[columns].[column_id] LEFT JOIN sys.types as [type] on [type].[user_type_id]=[columns].[user_type_id]";
+    List<Columns> columns = GetAll<Columns>(connString,newSql, CommandType.Text);
+    //表字段组合
+    foreach (Tables table in tables)
+    {
+        table.Columns = columns.Where(x => x.object_id == table.object_id).ToList();
+        MapType(table.Columns);
+    }
+#><#+   
+    /*******************************************************SqlHelper**********************************************************/
+    /// <summary>
+    /// 执行查询，获取数据集List<T>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="sql"></param>
+    /// <param name="commandType"></param>
+    /// <param name="parameters"></param>
+    /// <returns></returns>
+    public static List<T> GetAll<T>(string connString, string sql, CommandType commandType, params SqlParameter[] parameters) where T : new()
+    {
+        DataTable dt = ExecuteDataTable(connString,sql, commandType, parameters);
+        List<T> list = new List<T>();
+        foreach (DataRow row in dt.Rows)
+        {
+            T model = DataTableToEntity<T>(row, dt.Columns);
+            list.Add(model);
+        }
+        return list;
+    }
+    /// <summary>
+    /// 执行查询，返回DataTable对象
+    /// </summary>
+    /// <param name="sql"></param>
+    /// <param name="commandType"></param>
+    /// <param name="parameters"></param>
+    /// <returns></returns>
+    public static DataTable ExecuteDataTable(string connString, string sql, CommandType commandType, params SqlParameter[] parameters)
+    { 
+        using (SqlDataAdapter adapter = new SqlDataAdapter(sql, connString))
+        {
+            DataTable dt = new DataTable();
+            adapter.SelectCommand.CommandType = commandType;
+            if (parameters != null)
+            {
+                adapter.SelectCommand.Parameters.AddRange(parameters);
+            }
+            adapter.Fill(dt);
+            return dt;
+        } 
+    }
+    /// <summary>
+    /// DataTable To Entity
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    private static T DataTableToEntity<T>(DataRow data, DataColumnCollection columns) where T : new()
+    {
+        T model = new T();
+        foreach (PropertyInfo propertyInfo in typeof(T).GetProperties())
+        {
+            //字段属性
+            string propName = propertyInfo.Name;
+            string propType = propertyInfo.PropertyType.Name.Trim().ToLower();
+            //赋值
+            if (columns.Contains(propName))
+            {
+                object val = data[propName];
+                if (val != DBNull.Value && val != null)
+                {
+                    propertyInfo.SetValue(model, val, null);
+                }
+            }
+        }
+        return model;
+    }
+    /***************************************************数据库类型--c#类型映射*************************************************************/
+    /// <summary>
+    /// 映射字段类型
+    /// </summary>
+    /// <param name="type">数据库类型</param>
+    /// <param name="isNullable">是否可空</param>
+    /// <param name="max_length">长度</param>
+    /// <returns></returns>
+    public static void MapType(IList<Columns> list)
+    {
+        foreach (Columns model in list)
+        {
+            switch (model.type)
+            {
+                case "int":
+                case "tinyint":
+                case "smallint": model.type = "int"; break;
+                case "bit": model.type = "bool"; break;
+                case "smalldatetime":
+                case "datetime": model.type = "DateTime"; break;
+                case "float": model.type = "double"; break;
+                case "numeric":
+                case "smallmoney":
+                case "decimal": model.type = "decimal"; break;
+                case "real":
+                case "money": model.type = "float"; break;
+                case "xml":
+                case "ntext":
+                case "varchar":
+                case "nvarchar":
+                case "text": model.type = (model.max_length == 1) ? "char" : "string"; break;
+                case "bigint": model.type = "long"; break;
+                case "binary":
+                case "varbinary":
+                case "timestamp": model.type = "byte[]"; break;
+                case "char":
+                case "nchar": model.type = "char"; break;
+                case "sql_variant": model.type = "object"; break;
+                case "uniqueidentifier": model.type = "Guid"; break;
+                default: model.type = "string"; break;
+            }
+            //可空值类型判断
+            model.type = (model.type != "string" && model.type != "byte[]" && model.type != "object" && model.is_nullable) ? model.type + "?" : model.type;
+        }
+    }
+#>
