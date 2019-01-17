@@ -5,10 +5,6 @@
 <#@ import namespace="System.Reflection" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".txt" #>
-<#@ assembly name="System.Data" #>
-<#@ import namespace="System.Data" #>
-<#@ import namespace="System.Data.Common" #>
-<#@ import namespace="System.Data.SqlClient" #>
 <#@ import namespace="System.IO" #>
 <#@ include file="MultipleOutputHelper.ttinclude" #><#
     /***********************************************基础信息定义（命名空间，数据库连接信息）***********************************************************/
@@ -20,15 +16,13 @@
     string namespaceServerContracts="MyApp.ServerContracts";
     string namespaceController="MyApp.Controller";
     //连接字符串
-    //string connString= @"Server=1TVFGO8OATR3Y7G\SQLEXPRESS;DataBase=MyDB;User Id=sa;Password=123;"; 
-    string connString= @"Server=.;DataBase=MyDB;User Id=sa;Password=123456;"; 
+    //string connString= @"Server=localhost;DataBase=mydb;User Id=root;Password=123456;";
+    string connString= @"Server=1TVFGO8OATR3Y7G\SQLEXPRESS;DataBase=MyDB;User Id=sa;Password=123;"; 
+    //string connString= @"Server=.;DataBase=MyDB;User Id=sa;Password=123456;"; 
     //表名筛选 
     string filterString = " '%%' ";
 #><#+
-    /**********************************************************多文件输出帮助类**************************************************************************/
-
-
-    /********************************************************SqlServer数据库表模型***********************************************************************/
+    /********************************************************数据库表模型***********************************************************************/
     public class Tables
     {
         /// <summary>
@@ -36,11 +30,15 @@
         /// </summary>
         public int object_id { get; set; }
         /// <summary>
-        /// 表名 
+        /// 表名
         /// </summary>
         public string name { get; set; }
         /// <summary>
-        /// 表名
+        /// 表描述
+        /// </summary>
+        public string description { get; set; }
+        /// <summary>
+        /// 字段
         /// </summary>
         public List<Columns> Columns { get; set; }
     }
@@ -48,18 +46,22 @@
     {
         /// <summary>
         /// 表Id
-        /// </summary>
+        /// </summary>  
         public int object_id { get; set; }
         /// <summary>
         /// 字段Id
         /// </summary>
         public int column_id { get; set; }
         /// <summary>
+        /// 表名
+        /// </summary>
+        public string tableName { get; set; }
+        /// <summary>
         /// 字段名
         /// </summary>
         public string name { get; set; }
         /// <summary>
-        /// 字段类型
+        /// 字段类型Id
         /// </summary>
         public int user_type_id { get; set; }
         /// <summary>
@@ -79,23 +81,4 @@
         /// </summary>
         public string description { get; set; }
     }
-    public class Description
-    {
-        /// <summary>
-        /// 表Id
-        /// </summary>
-        public int major_id { get; set; }
-        /// <summary>
-        /// 字段Id
-        /// </summary>
-        public int minor_id { get; set; }
-        /// <summary>
-        /// 字段描述
-        /// </summary>
-        public string name { get; set; }
-    }
-    /********************************************************MySql数据库表模型***********************************************************************/
-    
-
-   
  #>

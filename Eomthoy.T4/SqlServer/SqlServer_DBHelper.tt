@@ -1,4 +1,8 @@
-﻿<#@ include file="../BaseTemplate.tt" #><#
+﻿<#@ include file="../BaseTemplate.tt" #>
+<#@ assembly name="System.Data" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.Data.Common" #>
+<#@ import namespace="System.Data.SqlClient" #><#
     //查询所有表
     string sql = "select * from sys.tables where name like "+ filterString;
     List<Tables> tables = GetAll<Tables> (connString,  sql, CommandType.Text);

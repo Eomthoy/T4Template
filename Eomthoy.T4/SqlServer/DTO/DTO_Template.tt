@@ -1,4 +1,4 @@
-﻿<#@ include file="../DBHelper.tt" #><#    
+﻿<#@ include file="../SqlServer_DBHelper.tt" #><#    
     //初始化Manager对象 
     var manager = Manager.Create(Host, GenerationEnvironment);  
     foreach (Tables table in tables) { 
@@ -8,15 +8,13 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace <#=namespaceDomain #>
+namespace <#=namespaceDTO #>
 {
     /// <summary>
     /// Create By T4Template
     /// </summary>
-    [Table("<#=table.name#>")]
-    public class <#=table.name#>Dto
+    public class <#=table.name.Replace("_","")#>Dto
     {
         #region Property
 <#foreach (Columns column in table.Columns){#>

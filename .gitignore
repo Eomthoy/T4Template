@@ -10,3 +10,8 @@
 /Eomthoy.T4.DataBaseTest/bin/Debug
 /Eomthoy.T4.DataBaseTest/obj/Debug
 /Eomthoy.T4/obj/Debug
+*.cs
+/Eomthoy.T4/SqlServer/Domain/*.cs
+/Eomthoy.T4/SqlServer/DTO/*.cs
+/Eomthoy.T4/MySql/Domain/*.cs
+/Eomthoy.T4/MySql/DTO/*.cs

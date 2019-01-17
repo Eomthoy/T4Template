@@ -1,4 +1,4 @@
-﻿<#@ include file="../SqlServer_DBHelper.tt" #><#    
+﻿<#@ include file="../MySql_DBHelper.tt" #><#    
     //初始化Manager对象 
     var manager = Manager.Create(Host, GenerationEnvironment);  
     foreach (Tables table in tables) { 
@@ -13,6 +13,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace <#=namespaceDomain #>
 {
     /// <summary>
+    /// <#=table.description ?? table.name #>
     /// Create By T4Template
     /// </summary>
     [Table("<#=table.name.Replace("_","")#>")]

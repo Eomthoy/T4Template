@@ -23,7 +23,11 @@ namespace Eomthoy.T4.DataBaseTest
         /// <summary>
         /// 表名
         /// </summary>
-        public string Name { get; set; }
+        public string name { get; set; }
+        /// <summary>
+        /// 表描述
+        /// </summary>
+        public string description { get; set; }
         /// <summary>
         /// 字段
         /// </summary>
@@ -33,13 +37,16 @@ namespace Eomthoy.T4.DataBaseTest
     {
         /// <summary>
         /// 表Id
-        /// </summary> 
-        [Description("")]
+        /// </summary>  
         public int object_id { get; set; }
         /// <summary>
         /// 字段Id
         /// </summary>
         public int column_id { get; set; }
+        /// <summary>
+        /// 表名
+        /// </summary>
+        public string tableName { get; set; }
         /// <summary>
         /// 字段名
         /// </summary>
@@ -63,9 +70,7 @@ namespace Eomthoy.T4.DataBaseTest
         /// <summary>
         /// 字段描述
         /// </summary>
-        public string Description { get; set; }
-
-        public char aaa { get; set; }
+        public string description { get; set; }
     }
     public class Description
     {

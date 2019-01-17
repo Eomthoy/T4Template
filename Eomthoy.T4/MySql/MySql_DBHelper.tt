@@ -1,0 +1,161 @@
+﻿<#@ include file="../BaseTemplate.tt" #>
+<#@ assembly name="System.Data" #>
+<#@ assembly name="$(ProjectDir)/MySql/MySql.Data.dll" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="MySql.Data.MySqlClient" #>
+<#
+    //查询所有表
+    string sql = @"SELECT table_name name, table_comment description FROM information_schema.TABLES WHERE table_schema = ( SELECT DATABASE ( ) )  and table_name like " + filterString;
+    List<Tables> tables = GetAll<Tables>(connString, sql, CommandType.Text);
+    //查询所有字段
+    string newSql = @"SELECT table_name tableName, column_name name, data_type type, column_comment description, (CASE is_nullable WHEN 'YES' THEN 1 ELSE 0 END) as is_nullable FROM information_schema.COLUMNS WHERE table_schema = (SELECT DATABASE() ) ORDER BY ordinal_position";
+    List<Columns> columns = GetAll<Columns>(connString,newSql, CommandType.Text);
+    //表字段组合
+    foreach (Tables table in tables)
+    {
+        table.Columns = columns.Where(x => x.tableName == table.name).ToList();
+        MapType(table.Columns);
+    }
+#>
+<#+
+    /*******************************************************MySqlHelper**********************************************************/
+        /// <summary>
+        /// 执行查询，返回DataTable对象
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="commandType"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public static DataTable ExecuteDataTable(string connString, string sql, CommandType commandType, params MySqlParameter[] parameters)
+        {
+                using (MySqlDataAdapter adapter = new MySqlDataAdapter(sql, connString))
+                {
+                    DataTable dt = new DataTable();
+                    adapter.SelectCommand.CommandType = commandType;
+                    if (parameters != null)
+                    {
+                        adapter.SelectCommand.Parameters.AddRange(parameters);
+                    }
+                    adapter.Fill(dt);
+                    return dt;
+                }
+        }
+        /// <summary>
+        /// 执行查询，获取数据集List<T>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="commandType"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public static List<T> GetAll<T>(string connString, string sql, CommandType commandType, params MySqlParameter[] parameters) where T : new()
+        {
+                DataTable dt = ExecuteDataTable(connString, sql, commandType, parameters);
+                List<T> list = new List<T>();
+                foreach (DataRow row in dt.Rows)
+                {
+                    T model = DataTableToEntity<T>(row, dt.Columns);
+                    list.Add(model);
+                }
+
+                return list;
+        }
+        /// <summary>
+        /// DataTable To Entity
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private static T DataTableToEntity<T>(DataRow data, DataColumnCollection columns) where T : new()
+        {
+            T model = new T();
+            foreach (PropertyInfo propertyInfo in typeof(T).GetProperties())
+            {
+                //字段属性
+                string propName = propertyInfo.Name;
+                string propType = propertyInfo.PropertyType.Name.Trim().ToLower();
+                //赋值
+                if (columns.Contains(propName))
+                {
+                    object val = data[propName];
+                    if (val != DBNull.Value && val != null)
+                    {
+                        if (propType.Contains("bool"))
+                        {
+                            val = Convert.ToBoolean(val);
+                        }
+                        propertyInfo.SetValue(model, val, null);
+                    }
+                }
+            }
+
+            return model;
+        }
+    /***************************************************数据库类型--c#类型映射*************************************************************/
+    /// <summary>
+    /// 映射字段类型
+    /// </summary>
+    /// <param name="type">数据库类型</param>
+    /// <param name="isNullable">是否可空</param>
+    /// <param name="max_length">长度</param>
+    /// <returns></returns>
+    public static void MapType(IList<Columns> list)
+    {
+		foreach (Columns model in list)
+            {
+                switch (model.type)
+                {
+                    case "tinyint":
+                    case "smallint":
+                    case "mediumint":
+                    case "int":
+                    case "integer":
+                        model.type = "int"; break;
+                    case "double":
+                        model.type = "double"; break;
+                    case "float":
+                        model.type = "float"; break;
+                    case "decimal":
+                        model.type = "decimal"; break;
+                    case "numeric":
+                    case "real":
+                        model.type = "decimal"; break;
+                    case "bit":
+                        model.type = "bool"; break;
+                    case "date":
+                    case "time":
+                    case "year":
+                    case "datetime":
+                    case "timestamp":
+                        model.type = "DateTime"; break;
+                    case "tinyblob":
+                    case "blob":
+                    case "mediumblob":
+                    case "longblog":
+                    case "binary":
+                    case "varbinary":
+                        model.type = "byte[]"; break;
+                    case "char":
+                    case "varchar":
+                    case "tinytext":
+                    case "text":
+                    case "mediumtext":
+                    case "longtext":
+                        model.type = "string"; break;
+                    case "point":
+                    case "linestring":
+                    case "polygon":
+                    case "geometry":
+                    case "multipoint":
+                    case "multilinestring":
+                    case "multipolygon":
+                    case "geometrycollection":
+                    case "enum":
+                    case "set":
+                    default:
+                        model.type = "string"; break;
+                }
+                model.type = (model.type != "byte[]" && model.type != "string" && model.is_nullable) ? model.type + "?" : model.type;
+            }
+    }
+#>
