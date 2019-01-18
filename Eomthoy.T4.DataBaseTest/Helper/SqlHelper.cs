@@ -46,7 +46,7 @@ namespace Common.Helper
             }
             catch (Exception ex)
             {
-                if (ex.InnerException != null)
+                while (ex.InnerException != null)
                 {
                     ex = ex.InnerException;
                 }
