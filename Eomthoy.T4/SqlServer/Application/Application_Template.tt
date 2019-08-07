@@ -1,0 +1,119 @@
+﻿<#@ include file="../SqlServer_DBHelper.tt" #><#    
+    //初始化Manager对象 
+    var manager = Manager.Create(Host, GenerationEnvironment);  
+    foreach (Tables table in tables) { 
+        manager.StartNewFile(table.name + "ServiceImpl.cs");
+		string lowerName = table.name.Substring(0, 1).ToLower() + table.name.Substring(1);
+#>
+using AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using <#=namespaceDomain #>;
+using <#=namespaceDTO #>;
+using <#=namespaceServerContracts #>;
+using <#=namespaceRepositry #>;
+using cdutcm.Common.Core.Core;
+using <#=namespaceDTO #>.QueryDto;
+using cdutcm.Common.Core.Check;
+using cdutcm.Common.Core.ExtensionMethods;
+
+namespace <#=namespaceApplication #>
+{
+	 public class <#=table.name #>ServiceImpl : ApplicationServiceImpl, I<#=table.name #>Service
+    {
+
+        #region context
+        private I<#=table.name #>Repository <#=lowerName #>Repository;
+
+        public <#=table.name #>ServiceImpl(IRepositoryContext context, I<#=lowerName #>)
+            : base(context)
+        {
+            this.<#=lowerName #>Repository = <#=lowerName #>;
+        }
+
+        /// <summary>
+        /// 根据ID得到一个Model
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public <#=table.name #>Dto Get(BaseQueryDto query)
+        {
+            <#=table.name #>Dto modelDto = null;
+            int modelID = query.Id.ToInt();
+            Expression<Func<<#=table.name #>, bool>> expression = o => o.Id == modelID;
+
+            <#=table.name #>Dto dto = new <#=table.name #>Dto();
+            <#=table.name #> <#=table.name #>Model = <#=table.name #>Repository.Get(expression);
+            Check.Require<ObjectNotExistedException>(<#=table.name #>Model != null, "数据不存在");
+            modelDto = Mapper.Map<<#=table.name #>Dto>(<#=table.name #>Model);
+
+            return modelDto;
+        }
+
+        /// <summary>
+        /// 数据分页
+        /// </summary>
+        /// <param name="pagesize"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        public PagedResult<<#=table.name #>Dto> GetList(BaseQueryDto query, int pagesize, int page)
+        {
+            Expression<Func<<#=table.name #>, bool>> expression = o => o.AchievementAppraisalId==query.Id;
+            //if (!string.IsNullOrEmpty(query.Name))
+            //{
+            // expression = expression.And(o => o.ProductName.StartsWith(query.Name));
+            // } 
+            PagedResult<<#=table.name #>> list = <#=table.name #>Repository.Search(expression, x => x.CreateTime, SortOrder.Ascending, page, pagesize);
+            PagedResult<<#=table.name #>Dto> result = new PagedResult<<#=table.name #>Dto>();
+            result.Total = list.Total;
+            result.Rows = Mapper.Map<IList<<#=table.name #>Dto>>(list.Rows);
+            return result;
+        }
+
+        /// <summary>
+        /// 新增
+        /// </summary>
+        /// <param name="model"></param>
+        public void Save(<#=table.name #>Dto model)
+        {
+            <#=table.name #> newModel = Mapper.Map<<#=table.name #>Dto, <#=table.name #>>(model);
+            newModel.CreateTime = DateTime.Now;
+            <#=table.name #>Repository.Create(newModel);
+            <#=table.name #>Repository.Context.Commit();
+        }
+
+        /// <summary>
+        /// 修改一个对象
+        /// </summary>
+        /// <param name="model"></param>
+        public void Update(<#=table.name #>Dto model)
+        {
+            <#=table.name #> newModel = <#=table.name #>Repository.GetByKey(model.Id);
+            //对于数据库修改的方法进行处理 
+            cdutcm.Common.Core.Tools.ValueCopyHelper.Copy(newModel, model, new string[] { "Id", "CreateTime" });
+
+            <#=table.name #>Repository.Update(newModel);
+            <#=table.name #>Repository.Context.Commit();
+        }
+
+        public void Delete(IList<string> ids)
+        {
+            foreach (string item in ids)
+            {
+                int id = item.ToInt();
+                <#=table.name #> model = <#=table.name #>Repository.GetByKey(id);
+                Check.Require<ObjectNotExistedException>(model != null, "数据不存在");
+                <#=table.name #>Repository.Remove(model);
+            }
+            <#=table.name #>Repository.Context.Commit();
+        }
+        #endregion
+
+    }
+}
+<#
+        manager.EndBlock();    
+    }
+    manager.Process(true, true);  
+#>

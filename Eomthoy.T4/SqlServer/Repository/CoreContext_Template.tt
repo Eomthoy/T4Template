@@ -1,0 +1,36 @@
+﻿<#@ include file="../SqlServer_DBHelper.tt" #><#    
+    //初始化Manager对象 
+    var manager = Manager.Create(Host, GenerationEnvironment);
+    manager.StartNewFile("CoreContext.cs");
+#>
+using <#=namespaceDomain #>;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace <#=namespaceRepositry #>
+{
+    public class CoreContext : DbContext
+    {
+        //连接字符串
+        public static string connectionString = null;
+        /// <summary>
+        /// 数据库连接配置
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //注入SqlServer连接字符串
+            optionsBuilder.UseSqlServer(connectionString);
+        }
+<#foreach (Tables table in tables) { #>
+        public virtual DbSet<<#=table.name #>> <#=table.name #> { get; set; }
+<#} #>
+    }
+}
+<#
+    manager.EndBlock();
+    manager.Process(true, true);
+#>

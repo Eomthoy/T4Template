@@ -1,0 +1,36 @@
+﻿<#@ include file="../SqlServer_DBHelper.tt" #><#    
+    //初始化Manager对象 
+    var manager = Manager.Create(Host, GenerationEnvironment);  
+    foreach (Tables table in tables) { 
+        manager.StartNewFile(table.name + ".cs");
+#>
+using System;
+using System.Text;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace <#=namespaceDomain #>
+{
+    /// <summary>
+    /// Create By T4Template
+    /// </summary>
+    [Table("<#=table.name.Replace("_","")#>")]
+    public class <#=table.name#>
+    {
+        #region Property
+<#foreach (Columns column in table.Columns){#>
+        /// <summary>
+        /// <#=column.description ?? column.name #>
+        /// </summary>
+        [Description("<#=column.description ?? column.name #>")]
+        public <#=column.type #> <#=column.name #> { get; set; }
+<# } #>
+        #endregion
+    }
+}
+<#
+        manager.EndBlock();    
+    }
+    manager.Process(true, true);  
+#>

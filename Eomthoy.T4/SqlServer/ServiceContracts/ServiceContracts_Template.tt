@@ -1,0 +1,63 @@
+﻿<#@ include file="../SqlServer_DBHelper.tt" #><#    
+    //初始化Manager对象 
+    var manager = Manager.Create(Host, GenerationEnvironment);  
+    foreach (Tables table in tables) { 
+        manager.StartNewFile(table.name + "Service.cs");
+		string lowerName = table.name.Substring(0, 1).ToLower() + table.name.Substring(1);
+#>
+using System.Collections.Generic;
+using System.ServiceModel;
+using <#=namespaceDTO #>;
+using <#=namespaceDTO #>.QueryDto;
+using cdutcm.Common.Core.Core;
+
+namespace <#=namespaceServerContracts #>
+{
+    public interface I<#=table.name #>Service : IApplicationServiceContract
+    {
+        /// <summary>
+        /// 保存（新增）
+        /// </summary>
+        /// <param name="model">需要保存的对象</param>
+        [OperationContract]
+        [FaultContract(typeof(FaultData))]
+        void Save(<#=table.name #>Dto model);
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="model">需要修改的对象</param>
+        [OperationContract]
+        [FaultContract(typeof(FaultData))]
+        void Update(<#=table.name #>Dto model);
+        /// <summary>
+        /// 根据id查询单个对象
+        /// </summary>
+        /// <param name="query">查询数据对象</param> 
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(FaultData))]
+       <#=table.name #>Dto Get(BaseQueryDto query);
+        /// <summary>
+        /// 分页查询数据集合
+        /// </summary>
+        /// <param name="query">查询数据对象</param>
+        /// <param name="pageSize">每页多少条记录</param>
+        /// <param name="page">第几页</param>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(FaultData))]
+        PagedResult<<#=table.name #>Dto> GetList(<#=table.name #>QueryDto query, int pageSize, int page);
+        /// <summary>
+        /// 删除数据
+        /// </summary>
+        /// <param name="ids">主键集合</param>
+        [OperationContract]
+        [FaultContract(typeof(FaultData))]
+        void Delete(IList<string> ids);
+    }
+}
+<#
+        manager.EndBlock();    
+    }
+    manager.Process(true, true);  
+#>

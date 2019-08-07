@@ -9,16 +9,18 @@
 <#@ include file="MultipleOutputHelper.ttinclude" #><#
     /***********************************************基础信息定义（命名空间，数据库连接信息）***********************************************************/
     //命名空间
-    string namespaceDTO="MyApp.DTO";
-    string namespaceDomain = "MyApp.Domain";
-    string namespaceRepositry="MyApp.Repositry";
-    string namespaceApplication="MyApp.Application";
-    string namespaceServerContracts="MyApp.ServerContracts";
-    string namespaceController="MyApp.Controller";
+    string namespaceDTO="Demo.DTO";
+    string namespaceDomain = "Demo.Domain";
+    string namespaceRepositry="Demo.Repositry";
+    string namespaceApplication="Demo.Application";
+    string namespaceServerContracts="Demo.ServerContracts";
+    string namespaceController="Demo.Controller";
     //连接字符串
     //string connString= @"Server=localhost;DataBase=mydb;User Id=root;Password=123456;";
-    string connString= @"Server=1TVFGO8OATR3Y7G\SQLEXPRESS;DataBase=MyDB;User Id=sa;Password=123;"; 
-    //string connString= @"Server=.;DataBase=MyDB;User Id=sa;Password=123456;"; 
+    //string connString= @"Server=192.168.100.120;DataBase=RecordDB;User Id=sa;Password=abc+123;"; 
+    //string connString= @"server=10.10.78.240\MsSQLSERVER1;database=RecordDB;uid=sa;pwd=123456"; 
+    //string connString= @"server=192.168.100.18;database=Sericulture;uid=sa;pwd=abc+123"; 
+    string connString= @"Server=.;DataBase=MsgDB;User Id=sa;Password=123456;"; 
     //表名筛选 
     string filterString = " '%%' ";
 #><#+
