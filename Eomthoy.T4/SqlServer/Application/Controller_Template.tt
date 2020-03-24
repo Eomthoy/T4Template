@@ -39,6 +39,17 @@ namespace <#=projectName #>ServerHost.Controllers
         public AjaxResult GetById([FromBody] <#=table.name #>QueryDTO query)
         {
             <#=table.name #> model = new <#=table.name #>BLL().GetFristModel(x => x.Id == query.Id);
+
+            if (!string.IsNullOrWhiteSpace(query.KeyWord))
+            {
+                HandleLog log = new HandleLog();
+                log.HandleName = WebSession.UserName;
+                log.Content = "查询了表[<#=table.name #>]关键词为" + query.KeyWord + "的记录";
+                log.CreateTime = DateTime.Now;
+                log.HandleType = 1;
+                new HandleLogBLL().Add(log);
+            }
+
             return new AjaxResult(model);
         }
         /// <summary>
@@ -50,8 +61,47 @@ namespace <#=projectName #>ServerHost.Controllers
         [Route("<#=table.name #>/GetList")]
         public AjaxResult GetList([FromBody] <#=table.name #>QueryDTO query)
         {
-            List<<#=table.name #>> list = new <#=table.name #>BLL().GetModel(x => x.CaseId == query.CaseId);
+            List<<#=table.name #>> list = new <#=table.name #>BLL().GetModel(x => true);
+
+            if (!string.IsNullOrWhiteSpace(query.KeyWord))
+            {
+                HandleLog log = new HandleLog();
+                log.HandleName = WebSession.UserName;
+                log.Content = "查询了表[<#=table.name #>]关键词为" + query.KeyWord + "的记录";
+                log.CreateTime = DateTime.Now;
+                log.HandleType = 1;
+                new HandleLogBLL().Add(log);
+            }
+
             return new AjaxResult(list);
+        }
+        /// <summary>
+        /// 数据分页
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("<#=table.name #>/GetPageList")]
+        public PageResult GetPageList([FromBody] <#=table.name #>QueryDTO query)
+        {
+			string sql = "SELECT *, count(1) over() as Total FROM <#=table.name #> WHERE 1 = 1";
+            if (!string.IsNullOrWhiteSpace(query.KeyWord))
+            {
+				// sql += $" And Name like '%{query.KeyWord}%' ";
+                HandleLog log = new HandleLog();
+                log.HandleName = WebSession.UserName;
+                log.Content = "查询了表[<#=table.name #>]关键词为" + query.KeyWord + "的记录";
+                log.CreateTime = DateTime.Now;
+                log.HandleType = 1;
+                new HandleLogBLL().Add(log);
+            }
+            sql += $" order by CreateTime desc offset {query.Offset} Rows fetch next {query.Limit} rows only";
+            DataTable dt = SqlHelper.ExecuteDataSetText(sql).Tables[0];
+            List<<#=table.name #>> rows = DtConversionList<<#=table.name #>>.ConvertToModel(dt).ToList();
+            int total = (rows.Count > 0) ? Convert.ToInt32(dt.Rows[0]["Total"]) : 0;
+            PageResult result = new PageResult(rows, total, Convert.ToInt32(Math.Ceiling(total * 1.0 / query.Limit)), query.Limit, query.Offset / query.Limit + 1);
+
+            return result;
         }
         /// <summary>
         /// 新增
@@ -64,6 +114,14 @@ namespace <#=projectName #>ServerHost.Controllers
         {
             model.CreateTime = DateTime.Now;
             new <#=table.name #>BLL().Add(model);
+
+            HandleLog log = new HandleLog();
+            log.HandleName = WebSession.UserName;
+            log.Content = "表[<#=table.name #>]新增了一条记录";
+            log.CreateTime = DateTime.Now;
+            log.HandleType = 1;
+            new HandleLogBLL().Add(log);
+
             return Success("保存成功");
         }
         /// <summary>
@@ -76,6 +134,14 @@ namespace <#=projectName #>ServerHost.Controllers
         public AjaxResult Update([FromBody] <#=table.name #> model)
         {
             new <#=table.name #>BLL().UpdateModel(model);
+
+            HandleLog log = new HandleLog();
+            log.HandleName = WebSession.UserName;
+            log.Content = "修改了表[<#=table.name #>]Id为" + query.Id + "的记录";
+            log.CreateTime = DateTime.Now;
+            log.HandleType = 1;
+            new HandleLogBLL().Add(log);
+
             return Success("保存成功");
         }
         /// <summary>
@@ -88,6 +154,14 @@ namespace <#=projectName #>ServerHost.Controllers
         public AjaxResult Delete([FromBody] <#=table.name #>QueryDTO query)
         {
             new <#=table.name #>BLL().DelBy(x => x.Id == query.Id);
+
+            HandleLog log = new HandleLog();
+            log.HandleName = WebSession.UserName;
+            log.Content = "删除了表[<#=table.name #>]Id为" + query.Id + "的记录";
+            log.CreateTime = DateTime.Now;
+            log.HandleType = 1;
+            new HandleLogBLL().Add(log);
+
             return Success("删除成功");
         }
     }
