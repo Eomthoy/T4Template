@@ -14,7 +14,7 @@ namespace <#=namespaceDTO #>
     /// <summary>
     /// Create By T4Template
     /// </summary>
-    public class <#=table.name.Replace("_","")#>Dto
+    public class <#=table.name.Replace("_","")#>DTO
     {
         #region Property
 <#foreach (Columns column in table.Columns){#>

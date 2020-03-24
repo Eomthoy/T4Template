@@ -1,0 +1,25 @@
+﻿<#@ include file="../SqlServer_DBHelper.tt" #><#    
+    //初始化Manager对象 
+    var manager = Manager.Create(Host, GenerationEnvironment);  
+    foreach (Tables table in tables) { 
+        manager.StartNewFile(table.name + "DAL.cs");
+#>
+using <#=namespaceModel #>;
+
+namespace <#=namespaceDAL #>
+{
+    /// <summary>
+    /// Author : Eom
+    /// Create : <#=DateTime.Now #>
+    /// </summary>
+    public class <#=table.name#>DAL:BaseDAL<<#=table.name#>>
+    {
+        public static readonly <#=table.name#>DAL Get<#=table.name#>DAL = new <#=table.name#>DAL();
+        public <#=table.name#>DAL() { }
+    }
+}
+<#
+        manager.EndBlock();    
+    }
+    manager.Process(true, true);  
+#>

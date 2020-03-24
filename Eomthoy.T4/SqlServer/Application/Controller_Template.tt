@@ -1,0 +1,99 @@
+﻿<#@ include file="../SqlServer_DBHelper.tt" #><#    
+    //初始化Manager对象 
+    var manager = Manager.Create(Host, GenerationEnvironment);  
+    foreach (Tables table in tables) { 
+        manager.StartNewFile(table.name + "Controller.cs");
+		string lowerName = table.name.Substring(0, 1).ToLower() + table.name.Substring(1);
+#>
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Data;
+using AutoMapper;
+using Newtonsoft.Json;
+using NPinyin;
+using <#=projectName#>.BLL;
+using <#=projectName#>.Common;
+using <#=projectName#>.Common.SessionManager;
+using <#=projectName#>.Model;
+using <#=projectName#>.ServerHost.DTO;
+using <#=projectName#>ServerHost.Models.Mix;
+using <#=projectName#>ServerHost.Common;
+
+namespace <#=projectName #>ServerHost.Controllers
+{
+	 public class <#=table.name #>Controller : BaseContrller
+    {
+        /// <summary>
+        /// 根据Id获取对象
+        /// </summary>
+        /// <param name="query">Id</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("<#=table.name #>/GetList")]
+        public AjaxResult GetById([FromBody] <#=table.name #>QueryDTO query)
+        {
+            <#=table.name #> model = new <#=table.name #>BLL().GetFristModel(x => x.Id == query.Id);
+            return new AjaxResult(model);
+        }
+        /// <summary>
+        /// 列表获取
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("<#=table.name #>/GetList")]
+        public AjaxResult GetList([FromBody] <#=table.name #>QueryDTO query)
+        {
+            List<<#=table.name #>> list = new <#=table.name #>BLL().GetModel(x => x.CaseId == query.CaseId);
+            return new AjaxResult(list);
+        }
+        /// <summary>
+        /// 新增
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("<#=table.name #>/Save")]
+        public AjaxResult Save([FromBody] <#=table.name #> model)
+        {
+            model.CreateTime = DateTime.Now;
+            new <#=table.name #>BLL().Add(model);
+            return Success("保存成功");
+        }
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("<#=table.name #>/Update")]
+        public AjaxResult Update([FromBody] <#=table.name #> model)
+        {
+            new <#=table.name #>BLL().UpdateModel(model);
+            return Success("保存成功");
+        }
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="query">Id</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("<#=table.name #>/Delete")]
+        public AjaxResult Delete([FromBody] <#=table.name #>QueryDTO query)
+        {
+            new <#=table.name #>BLL().DelBy(x => x.Id == query.Id);
+            return Success("删除成功");
+        }
+    }
+}
+<#
+        manager.EndBlock();    
+    }
+    manager.Process(true, true);  
+#>

@@ -68,6 +68,9 @@
       <DependentUpon>DTO_Template.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlServer\DTO\AccessControl201911Dto.cs">
+      <DependentUpon>DTO_Template.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="BaseTemplate.tt">
@@ -113,6 +116,11 @@
     <Content Include="SqlServer\Application\Application_Template.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Application_Template.txt</LastGenOutput>
+    </Content>
+    <Content Include="SqlServer\DTO\DTO_Template.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DTO_Template.tt</DependentUpon>
     </Content>
     <Content Include="SqlServer\Repository\Interface\Interface_Template.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

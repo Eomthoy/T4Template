@@ -7,80 +7,88 @@
 <#@ output extension=".txt" #>
 <#@ import namespace="System.IO" #>
 <#@ include file="MultipleOutputHelper.ttinclude" #><#
-    /***********************************************基础信息定义（命名空间，数据库连接信息）***********************************************************/
-    //命名空间
-    string namespaceDTO="Demo.DTO";
-    string namespaceDomain = "Demo.Domain";
-    string namespaceRepositry="Demo.Repositry";
-    string namespaceApplication="Demo.Application";
-    string namespaceServerContracts="Demo.ServerContracts";
-    string namespaceController="Demo.Controller";
-    //连接字符串
-    //string connString= @"Server=localhost;DataBase=mydb;User Id=root;Password=123456;";
-    //string connString= @"Server=192.168.100.120;DataBase=RecordDB;User Id=sa;Password=abc+123;"; 
-    //string connString= @"server=10.10.78.240\MsSQLSERVER1;database=RecordDB;uid=sa;pwd=123456"; 
-    //string connString= @"server=192.168.100.18;database=Sericulture;uid=sa;pwd=abc+123"; 
-    string connString= @"Server=.;DataBase=MsgDB;User Id=sa;Password=123456;"; 
-    //表名筛选 
-    string filterString = " '%%' ";
+				/***********************************************基础信息定义（命名空间，数据库连接信息）***********************************************************/
+				//命名空间
+				string namespaceDTO="MedicalHealthSystem.DTO";
+				string namespaceDomain = "MedicalHealthSystem.Domain";
+				string namespaceRepositry="MedicalHealthSystem.Repositry";
+				string namespaceApplication="MedicalHealthSystem.Application";
+				string namespaceServerContracts="MedicalHealthSystem.ServerContracts";
+				string namespaceController="MedicalHealthSystem.Controller";
+
+				string projectName= "MedicalHealthSystem";
+				string namespaceBLL = projectName+".BLL";
+				string namespaceDAL =projectName+ ".DAL";
+				string namespaceModel =projectName+ ".Model";
+
+
+				//连接字符串
+				//string connString= @"Server=localhost;DataBase=mydb;User Id=root;Password=123456;";
+				//string connString= @"Server=192.168.100.120;DataBase=RecordDB;User Id=sa;Password=abc+123;"; 
+				string connString= @"Server=192.168.3.50;DataBase=RecordDB;User Id=sa;Password=123456;"; 
+				//string connString= @"server=10.10.78.240\MsSQLSERVER1;database=RecordDB;uid=sa;pwd=123456"; 
+				//string connString= @"server=192.168.100.18;database=Sericulture;uid=sa;pwd=abc+123"; 
+				//string connString= @"Server=.;DataBase=RecordDB;User Id=sa;Password=123456;"; 
+				//表名筛选 
+				string filterString = " '%Health%' ";
 #><#+
-    /********************************************************数据库表模型***********************************************************************/
-    public class Tables
-    {
-        /// <summary>
-        /// 表Id
-        /// </summary>
-        public int object_id { get; set; }
-        /// <summary>
-        /// 表名
-        /// </summary>
-        public string name { get; set; }
-        /// <summary>
-        /// 表描述
-        /// </summary>
-        public string description { get; set; }
-        /// <summary>
-        /// 字段
-        /// </summary>
-        public List<Columns> Columns { get; set; }
-    }
-    public class Columns
-    {
-        /// <summary>
-        /// 表Id
-        /// </summary>  
-        public int object_id { get; set; }
-        /// <summary>
-        /// 字段Id
-        /// </summary>
-        public int column_id { get; set; }
-        /// <summary>
-        /// 表名
-        /// </summary>
-        public string tableName { get; set; }
-        /// <summary>
-        /// 字段名
-        /// </summary>
-        public string name { get; set; }
-        /// <summary>
-        /// 字段类型Id
-        /// </summary>
-        public int user_type_id { get; set; }
-        /// <summary>
-        /// 字段类型
-        /// </summary>
-        public string type { get; set; }
-        /// <summary>
-        /// 长度
-        /// </summary>
-        public int max_length { get; set; }
-        /// <summary>
-        /// 是否可空
-        /// </summary>
-        public bool is_nullable { get; set; }
-        /// <summary>
-        /// 字段描述
-        /// </summary>
-        public string description { get; set; }
-    }
+				/********************************************************数据库表模型***********************************************************************/
+				public class Tables
+				{
+								/// <summary>
+								/// 表Id
+								/// </summary>
+								public int object_id { get; set; }
+								/// <summary>
+								/// 表名
+								/// </summary>
+								public string name { get; set; }
+								/// <summary>
+								/// 表描述
+								/// </summary>
+								public string description { get; set; }
+								/// <summary>
+								/// 字段
+								/// </summary>
+								public List<Columns> Columns { get; set; }
+				}
+				public class Columns
+				{
+								/// <summary>
+								/// 表Id
+								/// </summary>  
+								public int object_id { get; set; }
+								/// <summary>
+								/// 字段Id
+								/// </summary>
+								public int column_id { get; set; }
+								/// <summary>
+								/// 表名
+								/// </summary>
+								public string tableName { get; set; }
+								/// <summary>
+								/// 字段名
+								/// </summary>
+								public string name { get; set; }
+								/// <summary>
+								/// 字段类型Id
+								/// </summary>
+								public int user_type_id { get; set; }
+								/// <summary>
+								/// 字段类型
+								/// </summary>
+								public string type { get; set; }
+								/// <summary>
+								/// 长度
+								/// </summary>
+								public int max_length { get; set; }
+								/// <summary>
+								/// 是否可空
+								/// </summary>
+								public bool is_nullable { get; set; }
+								/// <summary>
+								/// 字段描述
+								/// </summary>
+								public string description { get; set; }
+				}
  #>
