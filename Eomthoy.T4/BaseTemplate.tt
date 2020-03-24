@@ -31,7 +31,7 @@
 				//string connString= @"Server=.;DataBase=RecordDB;User Id=sa;Password=123456;"; 
 
 				//表名筛选 
-				string filterString = " '%HealthInfoRecords%' ";
+				string filterString = " '%MedicalEverydayBodyCondition%' ";
 #><#+
 				/********************************************************数据库表模型***********************************************************************/
 				public class Tables
