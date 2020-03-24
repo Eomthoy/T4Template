@@ -68,6 +68,17 @@
       <DependentUpon>DTO_Template.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlServer\BLL\Conn_PCase_BodyCheckBLL.cs">
+      <DependentUpon>BLL_Template.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SqlServer\BLL\MedicalEverydayBodyConditionBLL.cs" />
+    <Compile Include="SqlServer\Controller\Conn_PCase_BodyCheckController.cs">
+      <DependentUpon>Controller_Template.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SqlServer\Controller\MedicalEverydayBodyConditionController.cs" />
+    <Compile Include="SqlServer\DAL\Conn_PCase_BodyCheckDAL.cs">
+      <DependentUpon>DAL_Template.tt</DependentUpon>
+    </Compile>
     <Compile Include="SqlServer\DTO\AccessControl201911Dto.cs">
       <DependentUpon>DTO_Template.tt</DependentUpon>
     </Compile>
@@ -116,6 +127,36 @@
     <Content Include="SqlServer\Application\Application_Template.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Application_Template.txt</LastGenOutput>
+    </Content>
+    <Content Include="SqlServer\BLL\BLL_Template.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BLL_Template1.txt</LastGenOutput>
+    </Content>
+    <Content Include="SqlServer\BLL\BLL_Template.txt" />
+    <Content Include="SqlServer\BLL\BLL_Template1.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BLL_Template.tt</DependentUpon>
+    </Content>
+    <Content Include="SqlServer\Controller\Controller_Template.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Controller_Template1.txt</LastGenOutput>
+    </Content>
+    <Content Include="SqlServer\Controller\Controller_Template.txt" />
+    <Content Include="SqlServer\Controller\Controller_Template1.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Controller_Template.tt</DependentUpon>
+    </Content>
+    <Content Include="SqlServer\DAL\DAL_Template.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DAL_Template1.txt</LastGenOutput>
+    </Content>
+    <Content Include="SqlServer\DAL\DAL_Template.txt" />
+    <Content Include="SqlServer\DAL\DAL_Template1.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DAL_Template.tt</DependentUpon>
     </Content>
     <Content Include="SqlServer\DTO\DTO_Template.txt">
       <AutoGen>True</AutoGen>

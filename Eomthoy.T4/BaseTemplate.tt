@@ -30,8 +30,10 @@
 				//string connString= @"server=192.168.100.18;database=Sericulture;uid=sa;pwd=abc+123"; 
 				//string connString= @"Server=.;DataBase=RecordDB;User Id=sa;Password=123456;"; 
 
+				//      
 				//表名筛选 
-				string filterString = " '%MedicalEverydayBodyCondition%' ";
+				string likeTable = " '%%' ";
+				string inTable=" 'Conn_PCase_Health','Conn_PCase_BodyCheck' ";
 #><#+
 				/********************************************************数据库表模型***********************************************************************/
 				public class Tables
