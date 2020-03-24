@@ -35,7 +35,7 @@ namespace <#=projectName #>ServerHost.Controllers
         /// <param name="query">Id</param>
         /// <returns></returns>
         [HttpPost]
-        [Route("<#=table.name #>/GetList")]
+        [Route("<#=table.name #>/GetById")]
         public AjaxResult GetById([FromBody] <#=table.name #>QueryDTO query)
         {
             <#=table.name #> model = new <#=table.name #>BLL().GetFristModel(x => x.Id == query.Id);
