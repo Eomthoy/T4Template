@@ -9,17 +9,17 @@
 <#@ include file="MultipleOutputHelper.ttinclude" #><#
 				/***********************************************基础信息定义（命名空间，数据库连接信息）***********************************************************/
 				//命名空间
-				string namespaceDTO="MedicalHealthSystem.DTO";
-				string namespaceDomain = "MedicalHealthSystem.Domain";
-				string namespaceRepositry="MedicalHealthSystem.Repositry";
-				string namespaceApplication="MedicalHealthSystem.Application";
-				string namespaceServerContracts="MedicalHealthSystem.ServerContracts";
-				string namespaceController="MedicalHealthSystem.Controller";
-
 				string projectName= "MedicalHealthSystem";
 				string namespaceBLL = projectName+".BLL";
 				string namespaceDAL =projectName+ ".DAL";
 				string namespaceModel =projectName+ ".Model";
+
+				string namespaceDTO=projectName+"DTO";
+				string namespaceDomain =projectName+ "Domain";
+				string namespaceRepositry=projectName+ ".Repositry";
+				string namespaceApplication=projectName+ ".Application";
+				string namespaceServerContracts=projectName+ ".ServerContracts";
+				string namespaceController=projectName+ ".Controller";
 
 
 				//连接字符串
@@ -29,8 +29,9 @@
 				//string connString= @"server=10.10.78.240\MsSQLSERVER1;database=RecordDB;uid=sa;pwd=123456"; 
 				//string connString= @"server=192.168.100.18;database=Sericulture;uid=sa;pwd=abc+123"; 
 				//string connString= @"Server=.;DataBase=RecordDB;User Id=sa;Password=123456;"; 
+
 				//表名筛选 
-				string filterString = " '%Health%' ";
+				string filterString = " '%HealthInfoRecords%' ";
 #><#+
 				/********************************************************数据库表模型***********************************************************************/
 				public class Tables
